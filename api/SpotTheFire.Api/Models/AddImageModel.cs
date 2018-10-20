@@ -8,5 +8,11 @@ namespace SpotTheFire.Api.Models
 
         [Required]
         public string ImageBase64 { get; set; }
+
+        [Required]
+        public string Latitude { get; set; }
+
+        [Required]
+        public string Longitude { get; set; }
     }
 }

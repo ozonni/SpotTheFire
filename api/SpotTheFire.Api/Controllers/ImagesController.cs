@@ -60,7 +60,9 @@ namespace SpotTheFire.Api.Controllers
             {
                 Id = id,
                 Description = model.Description,
-                ImageBase64 = model.ImageBase64
+                ImageBase64 = model.ImageBase64,
+                Latitude = model.Latitude,
+                Longitude = model.Longitude
             });
 
             return CreatedAtAction(nameof(Get), new { id = id }, new { id = id });
