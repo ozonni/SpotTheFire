@@ -1,11 +1,17 @@
-FROM microsoft/dotnet:2.0-sdk
-WORKDIR /app
+# Stage 1
+FROM microsoft/aspnetcore-build AS builder
+WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY *.csproj ./
+# caches restore result by copying csproj file separately
+COPY *.csproj .
 RUN dotnet restore
 
-# copy and build everything else
-COPY . ./
-RUN dotnet publish -c Release -o out
-ENTRYPOINT ["dotnet", "out/SpotTheFire.Api.dll"]
+# copies the rest of your code
+COPY . .
+RUN dotnet publish --output /app/ --configuration Release
+
+# Stage 2
+FROM microsoft/aspnetcore
+WORKDIR /app
+COPY --from=builder /app .
+ENTRYPOINT ["dotnet", "SpotTheFire.Api.dll"]
