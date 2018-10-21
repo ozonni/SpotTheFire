@@ -13,6 +13,7 @@ class WildlifeClassifier:
         self.path = 'mock-data/'
         data = ImageClassifierData.from_paths(self.path, tfms=tfms_from_model(arch, sz))
         self.learn = ConvLearner.pretrained(self.arch, data, precompute=True)
+        self.learn.load('wildfire-model')
 
     def predict_single_image(self, image_path):
         trn_tfms, val_tfms = tfms_from_model(self.arch, self.sz) # get transformations
